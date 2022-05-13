@@ -1,5 +1,6 @@
 ﻿using DigitalEnvision.Assigment.Infrastructures;
 using DigitalEnvision.Assigment.Models.Jobs;
+using Hangfire;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace DigitalEnvision.Assigment.Jobs
         Task RunAlertQueJob();
     }
 
+
+    [AutomaticRetry(Attempts = 3, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
     public class AlertQueueJob : IAlertQueueJob
     {
         private readonly IApplicationDbContext _context;
@@ -24,12 +27,12 @@ namespace DigitalEnvision.Assigment.Jobs
         public async Task RunAlertQueJob()
         {
 
-            var birthdayUserIds = await _context.Users.Include(x => x.Alerts)
-                                    .Where(x => !x.Alerts.Any(x => x.LastExecution.HasValue && x.LastExecution.Value.Year <= DateTime.UtcNow.Year))
+            var birthdayUserIds = await _context.Users
+                                    .Where(x => x.BirtdayDate.Month == DateTime.UtcNow.Month && x.BirtdayDate.Day == DateTime.UtcNow.Day)
                                     .Select(x => x.Id).ToArrayAsync();
 
             var userIds = await _context.Users.Include(x => x.Alerts)
-                    .Where(x => !x.Alerts.Any(y => y.LastExecution.HasValue && y.LastExecution.Value.Year <= DateTime.UtcNow.Year) && !x.Alerts.Any(x => birthdayUserIds.Contains(x.Id)))
+                    .Where(x => !x.Alerts.Any(y => !y.LastExecution.HasValue || y.LastExecution.Value.Year <= DateTime.UtcNow.Year) && !x.Alerts.Any(x => birthdayUserIds.Contains(x.Id)))
                     .Select(x => x.Id).Distinct().ToArrayAsync();
 
             var alertLogs = new List<AlertLog>();

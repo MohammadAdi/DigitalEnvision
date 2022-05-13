@@ -163,3 +163,7 @@ C:\Assigment\DigitalEnvision\DigitalEnvision.Assigment\DigitalEnvision\DigitalEn
 C:\Assigment\DigitalEnvision\DigitalEnvision.Assigment\DigitalEnvision\DigitalEnvision.Assigment\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Data.SqlClient.dll
 C:\Assigment\DigitalEnvision\DigitalEnvision.Assigment\DigitalEnvision\DigitalEnvision.Assigment\bin\Debug\netcoreapp3.1\AutoWrapper.dll
 C:\Assigment\DigitalEnvision\DigitalEnvision.Assigment\DigitalEnvision\DigitalEnvision.Assigment\bin\Debug\netcoreapp3.1\FluentValidation.dll
+C:\Assigment\DigitalEnvision\DigitalEnvision.Assigment\DigitalEnvision\DigitalEnvision.Assigment\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Assigment\DigitalEnvision\DigitalEnvision.Assigment\DigitalEnvision\DigitalEnvision.Assigment\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Assigment\DigitalEnvision\DigitalEnvision.Assigment\DigitalEnvision\DigitalEnvision.Assigment\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Assigment\DigitalEnvision\DigitalEnvision.Assigment\DigitalEnvision\DigitalEnvision.Assigment\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileSystemGlobbing.dll

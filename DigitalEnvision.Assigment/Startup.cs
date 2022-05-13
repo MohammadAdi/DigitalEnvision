@@ -1,3 +1,4 @@
+using DigitalEnvision.Assigment.Helpers;
 using DigitalEnvision.Assigment.Infrastructures;
 using DigitalEnvision.Assigment.Jobs;
 using Hangfire;
@@ -34,6 +35,8 @@ namespace DigitalEnvision.Assigment
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
             services.AddTransient<IAlertQueueJob, AlertQueueJob>();
             services.AddTransient<ISendAlert, SendAlert>();
+            services.Configure<Hookbin>(Configuration.GetSection("Hookbin"));
+
             // Swagger Config
             services.AddSwaggerGen(c =>
             {

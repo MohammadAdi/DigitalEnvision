@@ -27,7 +27,7 @@ namespace DigitalEnvision.Assigment.Infrastructures
         {
             modelBuilder.Entity<Location>().HasData(
                 new Location { Id = 1, LocationName = "New York", TimeZone = -4 },
-                new Location { Id = 2, LocationName = "Melbourne", TimeZone = +10 }
+                new Location { Id = 2, LocationName = "Melbourne", TimeZone = 10 }
             );
         }
         public async Task<int> SaveChanges()
