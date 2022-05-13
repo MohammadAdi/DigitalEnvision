@@ -72,7 +72,7 @@ namespace DigitalEnvision.Assigment.Jobs
                     {
                         alert.Status = AlertStatus.Success;
                         alert.LastExecution = System.DateTime.UtcNow;
-                        alert.ErrorLog=string.Empty
+                        alert.ErrorLog = string.Empty;
                     }
                     else
                     {
