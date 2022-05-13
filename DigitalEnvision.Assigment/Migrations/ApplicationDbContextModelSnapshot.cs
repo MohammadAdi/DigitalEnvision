@@ -19,6 +19,67 @@ namespace DigitalEnvision.Assigment.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("DigitalEnvision.Assigment.Models.Jobs.AlertLog", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ErrorLog")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastExecution")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RetryCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AlertLogs");
+                });
+
+            modelBuilder.Entity("DigitalEnvision.Assigment.Models.Location", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("LocationName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TimeZone")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Locations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            LocationName = "New York",
+                            TimeZone = -4
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            LocationName = "Melbourne",
+                            TimeZone = 10
+                        });
+                });
+
             modelBuilder.Entity("DigitalEnvision.Assigment.Models.User", b =>
                 {
                     b.Property<long>("Id")
@@ -30,17 +91,48 @@ namespace DigitalEnvision.Assigment.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("LocationId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LocationId");
+
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("DigitalEnvision.Assigment.Models.Jobs.AlertLog", b =>
+                {
+                    b.HasOne("DigitalEnvision.Assigment.Models.User", "User")
+                        .WithMany("Alerts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DigitalEnvision.Assigment.Models.User", b =>
+                {
+                    b.HasOne("DigitalEnvision.Assigment.Models.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Location");
+                });
+
+            modelBuilder.Entity("DigitalEnvision.Assigment.Models.User", b =>
+                {
+                    b.Navigation("Alerts");
                 });
 #pragma warning restore 612, 618
         }

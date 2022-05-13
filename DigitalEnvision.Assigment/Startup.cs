@@ -1,22 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
+using DigitalEnvision.Assigment.Infrastructures;
+using DigitalEnvision.Assigment.Jobs;
+using Hangfire;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Swashbuckle.AspNetCore.Swagger;
-using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Hosting;
-using DigitalEnvision.Assigment.Infrastructures;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace DigitalEnvision.Assigment
 {
@@ -32,8 +25,15 @@ namespace DigitalEnvision.Assigment
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("ConStr")));
+            // Hangfire
+            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("ConStrHf")));
+            services.AddHangfireServer();
             services.AddControllers();
-
+            services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+            services.AddTransient<IAlertQueueJob, AlertQueueJob>();
+            services.AddTransient<ISendAlert, SendAlert>();
             // Swagger Config
             services.AddSwaggerGen(c =>
             {
@@ -48,20 +48,29 @@ namespace DigitalEnvision.Assigment
                         Email = "adhi.development@gmail.com",
                     }
                 });
+                c.CustomSchemaIds(x => x.FullName);
             });
-            services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("ConStr")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHangfireDashboard();
+            });
             app.UseSwagger();
             app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "BackEnd Assigment Test"));
+            app.UseHangfireDashboard();
+
+            RecurringJob.AddOrUpdate<IAlertQueueJob>("recurring-alert-queue", (x) => x.RunAlertQueJob(), "30 * * * *");
+            RecurringJob.AddOrUpdate<ISendAlert>("recurring-send-alert", (x) => x.RunSendAlert(), "0 */1 * * *");
         }
     }
 }

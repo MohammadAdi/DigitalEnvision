@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Assigment\\DigitalEnvision\\DigitalEnvision.Assigment\\DigitalEnvision.Assigment\\DigitalEnvision.Assigment.csproj": {}
+    "C:\\Assigment\\DigitalEnvision\\DigitalEnvision.Assigment\\DigitalEnvision\\DigitalEnvision.Assigment\\DigitalEnvision.Assigment.csproj": {}
   },
   "projects": {
-    "C:\\Assigment\\DigitalEnvision\\DigitalEnvision.Assigment\\DigitalEnvision.Assigment\\DigitalEnvision.Assigment.csproj": {
+    "C:\\Assigment\\DigitalEnvision\\DigitalEnvision.Assigment\\DigitalEnvision\\DigitalEnvision.Assigment\\DigitalEnvision.Assigment.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Assigment\\DigitalEnvision\\DigitalEnvision.Assigment\\DigitalEnvision.Assigment\\DigitalEnvision.Assigment.csproj",
+        "projectUniqueName": "C:\\Assigment\\DigitalEnvision\\DigitalEnvision.Assigment\\DigitalEnvision\\DigitalEnvision.Assigment\\DigitalEnvision.Assigment.csproj",
         "projectName": "DigitalEnvision.Assigment",
-        "projectPath": "C:\\Assigment\\DigitalEnvision\\DigitalEnvision.Assigment\\DigitalEnvision.Assigment\\DigitalEnvision.Assigment.csproj",
+        "projectPath": "C:\\Assigment\\DigitalEnvision\\DigitalEnvision.Assigment\\DigitalEnvision\\DigitalEnvision.Assigment\\DigitalEnvision.Assigment.csproj",
         "packagesPath": "C:\\Users\\Zero\\.nuget\\packages\\",
-        "outputPath": "C:\\Assigment\\DigitalEnvision\\DigitalEnvision.Assigment\\DigitalEnvision.Assigment\\obj\\",
+        "outputPath": "C:\\Assigment\\DigitalEnvision\\DigitalEnvision.Assigment\\DigitalEnvision\\DigitalEnvision.Assigment\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -44,6 +44,22 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "AutoWrapper.Core": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            },
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.0.1, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[10.0.1, )"
+            },
+            "MediatR.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[10.0.1, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[5.0.17, )"
@@ -64,7 +80,11 @@
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[5.3.1, )"
+              "version": "[5.3.3, )"
+            },
+            "hangfire": {
+              "target": "Package",
+              "version": "[1.7.28, )"
             }
           },
           "imports": [
@@ -85,7 +105,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.104\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.105\\RuntimeIdentifierGraph.json"
         }
       }
     }
