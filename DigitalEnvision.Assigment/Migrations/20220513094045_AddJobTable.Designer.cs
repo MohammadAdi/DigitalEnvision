@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DigitalEnvision.Assigment.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220513074450_AddJobTable")]
+    [Migration("20220513094045_AddJobTable")]
     partial class AddJobTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,7 @@ namespace DigitalEnvision.Assigment.Migrations
                     b.Property<string>("ErrorLog")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("LastExecution")
+                    b.Property<DateTime?>("LastExecution")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("RetryCount")

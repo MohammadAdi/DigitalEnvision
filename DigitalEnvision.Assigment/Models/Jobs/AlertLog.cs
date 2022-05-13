@@ -10,7 +10,7 @@ namespace DigitalEnvision.Assigment.Models.Jobs
         public long UserId { get; set; }
         public AlertStatus Status { get; set; }
         public int RetryCount { get; set; }
-        public DateTime LastExecution { get; set; }
+        public DateTime? LastExecution { get; set; }
         public string ErrorLog { get; set; }
     }
 }

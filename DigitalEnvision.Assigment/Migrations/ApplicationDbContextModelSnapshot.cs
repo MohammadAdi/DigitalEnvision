@@ -29,7 +29,7 @@ namespace DigitalEnvision.Assigment.Migrations
                     b.Property<string>("ErrorLog")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("LastExecution")
+                    b.Property<DateTime?>("LastExecution")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("RetryCount")

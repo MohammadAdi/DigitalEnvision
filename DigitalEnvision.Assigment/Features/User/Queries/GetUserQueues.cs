@@ -36,16 +36,16 @@ namespace DigitalEnvision.Assigment.Features.User.Queries
             {
                 try
                 {
-                    var users = await _context.Users.Include(x => x.Alerts)
-                                            .Where(x => !x.Alerts.Any(x => x.LastExecution.Year <= DateTime.UtcNow.Year))
-                                            .Select(x => new
-                                            {
-                                                x.Id,
-                                                x.FirstName,
-                                                x.LastName
-                                            }).ToArrayAsync();
+                    var birthDayUser = await _context.Users.Include(x => x.Alerts)
+                                            .Where(x => !x.Alerts.Any(x => x.LastExecution !=null|| x.LastExecution.Value.Year <= DateTime.UtcNow.Year))
+                                            .Select(x => x.Id).ToArrayAsync();
 
-                    return new ApiResponse("Success", users);
+                    var userIds = await _context.Users.Include(x => x.Alerts)
+                            .Where(x => !x.Alerts.Any(y => y.LastExecution !=null || y.LastExecution.Value.Year <= DateTime.UtcNow.Year) && !x.Alerts.Any(x=>birthDayUser.Contains(x.Id)))
+                            .Select(x => new { x.Id, x.FirstName, x.LastName
+                            }).ToArrayAsync();
+
+                    return new ApiResponse("Success", userIds);
                 }
                 catch (Exception ex)
                 {
